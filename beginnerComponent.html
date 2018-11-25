@@ -4,25 +4,48 @@
   <title>Beginner Component</title>
 </head>
 <body>
-  <p>My First Component</p>
   <div id="welcome"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.1.0/umd/react.development.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.1.0/umd/react-dom.development.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+
   <script type="text/babel">
-    class Message extends React.Component {
-      render() {
-	       return (
-           <div>
-              <h1>Check out my first component!</h1>
-           </div>
-      );
+
+  class Clicks extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        number: 1
       }
     }
 
-    ReactDOM.render(
-        <Message />, document.getElementById("welcome")
+    render() {
+      return (
+        <div>
+          <h2>{this.props.label}</h2>
+            <h3>Total Click counts: {this.state.number}</h3>
+          <p>As of: {this.props.date.toLocaleDateString()}</p>
+        </div>
       );
+    }
+  }
+
+  const info = {
+    date: new Date(),
+    image: 'https://avatars0.githubusercontent.com/u/1441485?v=4&s=280',
+  }
+
+  Clicks.defaultProps = {
+    label: "How Many Times Was This Button Clicked?"
+  }
+
+  ReactDOM.render(
+    <Clicks
+      date={info.date}
+      image={info.image}/>,document.getElementById('welcome')
+  );
+
   </script>
 </body>
 </html>
