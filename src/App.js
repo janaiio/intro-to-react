@@ -30,7 +30,15 @@ class App extends Component {
     const todos = this.state.todos.slice();
     const todo = todos[index];
     todo.isCompleted = todo.isCompleted ? false : true;
-    this.setState({ todos: todos});
+    this.setState({ todos: todos });
+  }
+
+  deleteTodo(e){
+    //this.setState({ this.state.todos.filter( )})
+    //if (!this.state.[propname]) { return }
+    //const deleteTodo = { description: this.state.newTodoDescription, isCompleted: false };
+    //this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });
+    console.log('deleteTodo clicked')
   }
 
   render() {
@@ -44,6 +52,7 @@ class App extends Component {
         <form onSubmit={ (e) => this.handleSubmit(e) }>
           <input type="text" value={ this.state.newTodoDescription } onChange={ (e) => this.handleChange(e) }/>
           <input type="submit" />
+          <input type="button" value="Delete" onClick={ (e) => this.deleteTodo(e) } />
         </form>
       </div>
     );
