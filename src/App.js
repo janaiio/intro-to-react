@@ -7,12 +7,11 @@ class App extends Component {
     super(props);
     this.state = {
       todos: [
-        { description: 'Walk the cat', isCompleted: true, isDeleted: onClick.target.value },
-        { description: 'Throw the dishes away', isCompleted: false, isDeleted: onClick.target.value },
-        { description: 'Buy new dishes', isCompleted: false, isDeleted: onClick.target.value }
+        { description: 'Walk the cat', isCompleted: true },
+        { description: 'Throw the dishes away', isCompleted: false },
+        { description: 'Buy new dishes', isCompleted: false }
       ],
       newTodoDescription: '',
-      completedFilter: clickStatus === 'completed'
     };
   }
 
@@ -27,17 +26,22 @@ class App extends Component {
     this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });
   }
 
-  deleteTodo (e) {
-    if (!this.state.deletedTodo) { return };
-    const filteredTodo = { description: this.state.deletedTodo };
-    this.setState({ todos: [this.state.todos, filteredTodo], deletedTodo: ''});
-  }
+//NEXT STEPS:
+//deleteTodo (e) {
+//Declare a variable to hold the new array,
+//and assign it to the result of the filter.
+//  const filteredTodos = (!this.state.todos.filter((item) => item.property))
+  //"property" will need to be one from this.state.todos
+  //aka description, isCompleted, newTodoDescription, or a newer one
+//The filter should filter out the `todo` we want to delete.
+//Return the resulting new array variable.
+//  return filteredTodos();
+//}
 
-  toggleComplete(index) {
-    const todos = this.state.todos.slice();
-    const todo = todos[index];
-    todo.isCompleted = todo.isCompleted ? false : true;
-    this.setState({ todos: todos });
+  deleteTodo (e) {
+    if (!this.state.filteredTodo) { return };
+    const remainTodo = { description: this.state.filteredTodo, isCompleted: false }; //true or false? };
+    this.setState({ todos: [this.state.todos, remainTodo], filteredTodo: []});
   }
 
 // The code below did not kick back any errors, but was also non-responsive.
@@ -54,12 +58,19 @@ class App extends Component {
 //    this.setState({ todos: todos });
 //  }
 
+  toggleComplete(index) {
+    const todos = this.state.todos.slice();
+    const todo = todos[index];
+    todo.isCompleted = todo.isCompleted ? false : true;
+    this.setState({ todos: todos });
+  }
+
   render() {
     return (
       <div className="App">
         <ul>
           { this.state.todos.map( (todo, index) =>
-            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) }/> //isDeleted={ todo.isDeleted }  deleteTodo={ () => this.deleteTodo(index) }/>
+            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) }/>
           )}
         </ul>
         <form onSubmit={ (e) => this.handleSubmit(e) } onClick={ (e) => this.deleteTodo(e) }>
