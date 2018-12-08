@@ -26,38 +26,6 @@ class App extends Component {
     this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });
   }
 
-//NEXT STEPS:
-//deleteTodo (e) {
-//Declare a variable to hold the new array,
-//and assign it to the result of the filter.
-//  const filteredTodos = (!this.state.todos.filter((item) => item.property))
-  //"property" will need to be one from this.state.todos
-  //aka description, isCompleted, newTodoDescription, or a newer one
-//The filter should filter out the `todo` we want to delete.
-//Return the resulting new array variable.
-//  return filteredTodos();
-//}
-
-  deleteTodo (e) {
-    if (!this.state.filteredTodo) { return };
-    const remainTodo = { description: this.state.filteredTodo, isCompleted: false }; //true or false? };
-    this.setState({ todos: [this.state.todos, remainTodo], filteredTodo: []});
-  }
-
-// The code below did not kick back any errors, but was also non-responsive.
-// This is because `isDeleted` is not a defined property in this.state.
-// Consider how this can be resolved by clickStatus in this.state.
-
-//  deleteTodo (index) {
-//    const todos = (!this.state.todos.filter((item) => item.isDeleted));
-//    const todo = todos[index];
-//    todo.isDeleted = todo.isDeleted ? false : true;
-//    if (todo.isDeleted === 'true') {
-//      return todos;
-//    };
-//    this.setState({ todos: todos });
-//  }
-
   toggleComplete(index) {
     const todos = this.state.todos.slice();
     const todo = todos[index];
@@ -65,15 +33,22 @@ class App extends Component {
     this.setState({ todos: todos });
   }
 
+  deleteTodo (index) {
+    const todos = this.state.todos.slice();
+    const todoToDelete = todos[index];
+    const filteredTodos = todos.filter((item) => item !== todoToDelete);
+    this.setState({ todos: filteredTodos });
+  }
+
   render() {
     return (
       <div className="App">
         <ul>
           { this.state.todos.map( (todo, index) =>
-            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) }/>
+            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) } deleteTodo={ () => this.deleteTodo(index)}/>
           )}
         </ul>
-        <form onSubmit={ (e) => this.handleSubmit(e) } onClick={ (e) => this.deleteTodo(e) }>
+        <form onSubmit={ (e) => this.handleSubmit(e) }>
           <input type="text" value={ this.state.newTodoDescription } onChange={ (e) => this.handleChange(e) }/>
           <input type="submit" />
         </form>
