@@ -33,12 +33,12 @@ class App extends Component {
     this.setState({ todos: todos });
   }
 
-  deleteTodo(e){
-    //this.setState({ this.state.todos.filter( )})
-    //if (!this.state.[propname]) { return }
-    //const deleteTodo = { description: this.state.newTodoDescription, isCompleted: false };
-    //this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });
-    console.log('deleteTodo clicked')
+  deleteTodo = (index, e) => {
+    const todos = this.state.todos.filter(todo => {
+      return todo.key !== key;
+    const filteredTodos = Object.assign([], this.state.todos);
+    this.setState({ filteredTodos: todos });
+    console.log('deleteTodo clicked');
   }
 
   render() {
@@ -46,13 +46,12 @@ class App extends Component {
       <div className="App">
         <ul>
           { this.state.todos.map( (todo, index) =>
-            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) }/>
+            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) } deleteTodo={ this.deleteTodo.bind(this, index) }/>
           )}
         </ul>
         <form onSubmit={ (e) => this.handleSubmit(e) }>
           <input type="text" value={ this.state.newTodoDescription } onChange={ (e) => this.handleChange(e) }/>
           <input type="submit" />
-          <input type="button" value="Delete" onClick={ (e) => this.deleteTodo(e) } />
         </form>
       </div>
     );
